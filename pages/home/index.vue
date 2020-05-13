@@ -19,9 +19,9 @@
                   <p v-html="item.title" @click="toArticleDetail(item.id)"
                      style="cursor:pointer;color: #2866bd;margin-bottom:20px;margin-top:10px;font-weight: 700;"
                      class="articlecontent">
-                    {{item.title}}</p>
+                    </p>
                   <p v-html="item.content">
-                    {{item.content}}</p>
+                    </p>
                   <span>id:{{item.id}}</span>|
                   <span>创建时间:{{item.createtime}}</span>
                 </el-card>
@@ -140,5 +140,9 @@
   }
   .el-card:hover {
     box-shadow: 0 0 15px 3px rgba(0,0,0,.18);
+  }
+  em {
+    color: orangered !important;
+    font-style:normal
   }
 </style>
