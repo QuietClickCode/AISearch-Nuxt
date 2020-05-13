@@ -45,6 +45,8 @@ module.exports = {
   ** Build configuration
   */
   build: {
+    cache: true,
+    parallel: true,
     transpile: [/^element-ui/],
     /*
     ** You can extend webpack config here
