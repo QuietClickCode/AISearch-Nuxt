@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-show="isLoaded">
+    <div v-loading="isLoaded">
       <div style="" :class="searchinput">
         <el-input style="width: 500px;margin-top:5px;" v-model="keyword" @keyup.enter.native="search"
                   :class="searchinput2">
@@ -39,7 +39,7 @@
     name: "home",
     data() {
       return {
-        isLoaded:false,
+        isLoaded:true,
         isShow: false,
         searchinput3: {
           searchinputClass4: false,
@@ -67,7 +67,7 @@
 
     methods: {
       haha() {
-        this.isLoaded =true;
+        this.isLoaded =false;
       },
       search() {
         var vueThis = this;
