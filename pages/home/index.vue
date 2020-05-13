@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>
+    <div v-show="isLoaded">
       <div style="" :class="searchinput">
         <el-input style="width: 500px;margin-top:5px;" v-model="keyword" @keyup.enter.native="search"
                   :class="searchinput2">
@@ -35,11 +35,11 @@
 </template>
 <script>
   import axios from '~/plugins/axios'
-
   export default {
     name: "home",
     data() {
       return {
+        isLoaded:false,
         isShow: false,
         searchinput3: {
           searchinputClass4: false,
@@ -61,10 +61,14 @@
         loading: false
       }
     },
-    created() {
-      // this.init()
+    mounted() {
+      this.haha();
     },
+
     methods: {
+      haha() {
+        this.isLoaded =true;
+      },
       search() {
         var vueThis = this;
         vueThis.loading = true;
