@@ -17,7 +17,7 @@
             'Content-Type': 'application/json'
           },
           method: 'get',
-          url: "http://114.55.94.186" + '/searchbky?wd=' + "haha"
+          url: "http://114.55.94.186" + '/searchbky?wd=' + "nuxt"
         }).then(function (response) {
           alert(JSON.stringify(response))
         }).catch(function (error) {
