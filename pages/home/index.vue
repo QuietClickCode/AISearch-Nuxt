@@ -1,20 +1,29 @@
 <template>
   <div>
+    <div style=" position: fixed;
+    bottom: 0px;
+    left: 50%;
+font-size: 30px;"
+         v-show="loading"
+         class="el-icon-loading"
+    >
+
+    </div>
     <div v-loading="isLoaded">
       <div style="" :class="searchinput">
-        <el-input style="width: 500px;margin-top:5px;" v-model="keyword" @keyup.enter.native="search"
+        <el-input style="width: 500px;margin-top:5px;" v-model="keyword" @keyup.enter.native="search(1)"
                   :class="searchinput2">
-          <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
+          <el-button slot="append" icon="el-icon-search" @click="search(1)"></el-button>
         </el-input>
       </div>
-      <div style="" :class="searchinput3">
-        <div class="table-div section" v-loading="loading">
-          <section class="centertest">
+      <div style="" :class="searchinput3" >
+        <div class="table-div section" >
+          <section class="centertest" >
             <p style="margin:0px 200px 10px;font-size: 12px;
     color: #999;" v-if="isShow">AISearch为您找到相关结果{{result.total}}个,耗时{{result.took}}ms</p>
             <div style="list-style:none;">
-              <div v-for="(item,i) in data">
-                <el-card class="box-card" style="margin: 30px 150px;">
+              <div v-for="(item,i) in data"  >
+                <el-card class="box-card" style="margin: 30px 150px;" >
 
                   <p v-html="item.title" @click="toArticleDetail(item.id)"
                      style="cursor:pointer;color: #2866bd;margin-bottom:20px;margin-top:10px;font-weight: 700;"
@@ -39,57 +48,77 @@
     name: "home",
     data() {
       return {
+        message:'',
+        lastKeyword:'',
+        page:1,
         isLoaded:true,
         isShow: false,
         searchinput3: {
-          searchinputClass4: false,
-          searchinputClass5:true
+          searchinputClass4: true,
+          searchinputClass5:false
         },
         searchinput: {
-          searchinputClass: true,
-          searchinputClass2: false,
-          searchinputClass3: false
+          searchinputClass: false,
+          searchinputClass2: true,
+          searchinputClass3: true
         },
         searchinput2: {
-          searchinputClass: true,
-          searchinputClass2: false,
+          searchinputClass: false,
+          searchinputClass2: true,
 
         },
         keyword: "",
         result: [],
-        data: {},
+        data: [],
         loading: false
       }
     },
+    created() {
+    },
     mounted() {
+      this.keyword = localStorage.getItem("word");
+      this.search(1);
       this.haha();
+      var vueThis = this;
+      window.onscroll = function(){
+        //变量scrollTop是滚动条滚动时，距离顶部的距离
+        var scrollTop = document.documentElement.scrollTop||document.body.scrollTop;
+        //变量windowHeight是可视区的高度
+        var windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+        //变量scrollHeight是滚动条的总高度
+        var scrollHeight = document.documentElement.scrollHeight||document.body.scrollHeight;
+        //滚动条到底部的条件
+        if(scrollTop+windowHeight == scrollHeight){
+          //到了这个就可以进行业务逻辑加载后台数据了
+          vueThis.search(vueThis.page ++);
+        }
+      }
     },
 
     methods: {
       haha() {
         this.isLoaded =false;
       },
-      search() {
+      search(page) {
+        if (this.lastKeyword != this.keyword) {
+          this.data = [];
+        }
+        this.lastKeyword = this.keyword
         var vueThis = this;
         vueThis.loading = true;
+        localStorage.setItem("word",this.keyword)
         axios({
           headers: {
             'Content-Type': 'application/json'
           },
           method: 'get',
-          url: "http://114.55.94.186" + '/searchbky?wd=' + this.keyword
+          url: "http://114.55.94.186" + '/searchbky?wd=' + this.keyword + '&pn=' + page
         }).then(function (res) {
-          vueThis.data = res.data.data.list
-          vueThis.result = res.data.data
-          vueThis.loading = false
-          vueThis.searchinput.searchinputClass = false
-          vueThis.searchinput.searchinputClass2 = true
-          vueThis.searchinput2.searchinputClass = false
-          vueThis.searchinput2.searchinputClass2 = true
-          vueThis.searchinput.searchinputClass3 = true
-          vueThis.searchinput3.searchinputClass4 = true
-          vueThis.searchinput3.searchinputClass5 = false
-          vueThis.isShow = true
+            vueThis.data.push(...res.data.data.list)
+            console.log(vueThis.data)
+            vueThis.result = res.data.data
+            vueThis.isShow = true
+            vueThis.loading = false
         }).catch(function (error) {
         })
       }
@@ -143,7 +172,7 @@
     border: 1px solid rgba(0,0,0,.1);
   }
   .el-card:hover {
-    box-shadow: 0 0 15px 3px rgba(0,0,0,.18);
+    box-shadow: 0 0 0px 0px rgba(0,0,0,.18);
   }
   em {
     color: orangered !important;

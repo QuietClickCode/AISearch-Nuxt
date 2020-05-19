@@ -1,72 +1,134 @@
 <template>
-  <div class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        my-nuxt
-      </h1>
-      <h2 class="subtitle">
-        My cool Nuxt.js project
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
+  <div>
+
+    <div v-loading="isLoaded">
+      <div style="" :class="searchinput">
+        <el-input style="width: 500px;margin-top:5px;" v-model="keyword" @keyup.enter.native="search"
+                  :class="searchinput2">
+          <el-button slot="append" icon="el-icon-search" @click="search(1)"></el-button>
+        </el-input>
+      </div>
+      <div style="" :class="searchinput3">
+        <div class="table-div section" v-loading="loading">
+          <section class="centertest">
+            <p style="margin:0px 200px 10px;font-size: 12px;
+    color: #999;" v-if="isShow">AISearch为您找到相关结果{{result.total}}个,耗时{{result.took}}ms</p>
+            <div style="list-style:none;">
+              <div v-for="(item,i) in data">
+                <el-card class="box-card" style="margin: 30px 150px;">
+
+                  <p v-html="item.title" @click="toArticleDetail(item.id)"
+                     style="cursor:pointer;color: #2866bd;margin-bottom:20px;margin-top:10px;font-weight: 700;"
+                     class="articlecontent">
+                  </p>
+                  <p v-html="item.content">
+                  </p>
+                  <span>id:{{item.id}}</span>|
+                  <span>创建时间:{{item.createtime}}</span>
+                </el-card>
+              </div>
+            </div>
+          </section>
+        </div>
       </div>
     </div>
   </div>
 </template>
-
 <script>
-import Logo from '~/components/Logo.vue'
+  import axios from '~/plugins/axios'
+  export default {
+    name: "home",
+    data() {
+      return {
+        page:1,
+        isLoaded:true,
+        isShow: false,
+        searchinput3: {
+          searchinputClass4: false,
+          searchinputClass5:true
+        },
+        searchinput: {
+          searchinputClass: true,
+          searchinputClass2: false,
+          searchinputClass3: false
+        },
+        searchinput2: {
+          searchinputClass: true,
+          searchinputClass2: false,
 
-export default {
-  components: {
-    Logo
+        },
+        keyword: "",
+        result: [],
+        data: [],
+        loading: false
+      }
+    },
+    mounted() {
+      this.haha();
+    },
+
+    methods: {
+      haha() {
+        this.isLoaded =false;
+      },
+      search(page) {
+        this.$router.push("/home");
+        localStorage.setItem("word",this.keyword)
+      }
+    }
+
   }
-}
 </script>
-
 <style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
+  .searchinputClass {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%)
+  }
 
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
+  .searchinputClass2 {
+    position: fixed;
+    left: 50%;
+    top: 0%;
+    transform: translate(-50%)
+  }
 
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
+  .searchinputClass3 {
+    background-color: rgb(248, 248, 248);
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
+    width: 100%;
+    height: 50px;
+  }
 
-.links {
-  padding-top: 15px;
-}
+  .searchinputClass4 {
+    background-color: rgb(248, 248, 248);
+    margin-top: 50px;
+    padding: 10px
+  }
+
+  .searchinputClass5 {
+    background-color: rgb(248, 248, 248);
+    width: 100%;
+    height: 100vh
+  }
+  .el-card.is-always-shadow{
+    box-shadow: 0 0px 0px 0 rgba(0,0,0,0);
+  }
+  .el-card__body {
+    border-collapse: collapse;
+    padding: 0px 15px 20px;
+    border: 1px solid transparent;
+    transition: all .2s cubic-bezier(.23,1,.32,1) 0s;
+  }
+  .el-card__body:hover {
+    border: 1px solid rgba(0,0,0,.1);
+  }
+  .el-card:hover {
+    box-shadow: 0 0 0px 0px rgba(0,0,0,.18);
+  }
+  em {
+    color: orangered !important;
+    font-style:normal
+  }
 </style>
