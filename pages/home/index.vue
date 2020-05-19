@@ -9,21 +9,33 @@ font-size: 30px;"
     >
 
     </div>
-    <div v-loading="isLoaded">
+    <el-drawer
+      size="13%"
+      title="我是标题"
+      :modal="false"
+      :visible.sync="drawer"
+      :direction="direction"
+      :before-close="handleClose">
+      <span>我来啦!</span>
+    </el-drawer>
+    <div v-loading="isLoaded" >
       <div style="" :class="searchinput">
         <el-input style="width: 500px;margin-top:5px;" v-model="keyword" @keyup.enter.native="search(1)"
                   :class="searchinput2">
           <el-button slot="append" icon="el-icon-search" @click="search(1)"></el-button>
         </el-input>
+        <div @click="handleClick">
+        <el-avatar  type="primary" style="margin-left: 16px;" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+        </div>
       </div>
       <div style="" :class="searchinput3" >
-        <div class="table-div section" >
+        <div class="table-div section">
           <section class="centertest" >
-            <p style="margin:0px 200px 10px;font-size: 12px;
-    color: #999;" v-if="isShow">AISearch为您找到相关结果{{result.total}}个,耗时{{result.took}}ms</p>
             <div style="list-style:none;">
+            <p style="font-size: 12px;transition: 0.3s;
+    color: #999;" v-if="isShow" :class="{margin3:test,margin4:!test}">AISearch为您找到相关结果{{result.total}}个,耗时{{result.took}}ms</p>
               <div v-for="(item,i) in data"  >
-                <el-card class="box-card" style="margin: 30px 150px;" >
+                <el-card class="box-card" :class="{margin1:test,margin2:!test}" >
 
                   <p v-html="item.title" @click="toArticleDetail(item.id)"
                      style="cursor:pointer;color: #2866bd;margin-bottom:20px;margin-top:10px;font-weight: 700;"
@@ -48,6 +60,9 @@ font-size: 30px;"
     name: "home",
     data() {
       return {
+        test:true,
+        drawer: false,
+        direction: 'ltr',
         message:'',
         lastKeyword:'',
         page:1,
@@ -96,6 +111,15 @@ font-size: 30px;"
     },
 
     methods: {
+      handleClose() {
+        this.drawer = false;
+        this.test = true;
+      },
+      handleClick() {
+        this.drawer = true;
+        this.test = false;
+      },
+
       haha() {
         this.isLoaded =false;
       },
@@ -177,5 +201,17 @@ font-size: 30px;"
   em {
     color: orangered !important;
     font-style:normal
+  }
+  .margin1 {
+    margin: 0px 150px 30px 150px;
+  }
+  .margin2 {
+    margin: 0px 30px 30px 270px;
+  }
+  .margin3 {
+    margin: 5px 150px;
+  }
+  .margin4 {
+    margin: 5px 30px 5px 270px;
   }
 </style>
