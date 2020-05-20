@@ -11,12 +11,29 @@ font-size: 30px;"
     </div>
     <el-drawer
       size="13%"
-      title="我是标题"
+      title="个人信息"
       :modal="false"
       :visible.sync="drawer"
       :direction="direction"
       :before-close="handleClose">
-      <span>我来啦!</span>
+      <div>
+        <div>
+          <i class="el-icon-user-solid"></i>
+          <span>个人中心</span>
+        </div>
+        <div>
+          <i class="el-icon-user-solid"></i>
+          <span>历史记录</span>
+        </div>
+        <div>
+          <i class="el-icon-user-solid"></i>
+          <span>主题设置</span>
+        </div>
+        <div>
+          <i class="el-icon-user-solid"></i>
+          <span>退出</span>
+        </div>
+      </div>
     </el-drawer>
     <div v-loading="isLoaded" >
       <div style="" :class="searchinput">
@@ -111,6 +128,14 @@ font-size: 30px;"
     },
 
     methods: {
+      toArticleDetail(id) {
+        this.$router.push({
+          path:"/detail",
+          query:{
+            id:id
+          }
+        })
+      },
       handleClose() {
         this.drawer = false;
         this.test = true;
