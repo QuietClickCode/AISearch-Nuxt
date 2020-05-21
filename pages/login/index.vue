@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-input v-model="user.username"/>
-    <el-input v-model="user.password"/>
+    <el-input v-model="user.password" @keyup.enter.native="login"/>
     <el-button @click="login">登录</el-button>
     <remote-js src="http://pv.sohu.com/cityjson?ie=utf-8"></remote-js>
   </div>

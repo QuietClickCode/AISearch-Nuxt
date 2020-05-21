@@ -10,14 +10,15 @@ font-size: 30px;"
 
     </div>
     <el-drawer
+      :show-close="false"
       size="13%"
       :modal="false"
       :visible.sync="drawer"
       :direction="direction"
       :before-close="handleClose">
-      <div slot="title" style="text-align: center">
-        <el-avatar  type="primary" style="margin-left: 16px;" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
-        <div>{{username}}</div>
+      <div slot="title" style="background-image: url(https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1627279935,1855750361&fm=26&gp=0.jpg);height:200px">
+        <el-avatar type="primary" style="margin:50px 16px 0px 16px" :size="60" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+        <div style="margin-left: 30px">{{username}}</div>
       </div>
       <div>
         <div class="item">
@@ -34,7 +35,7 @@ font-size: 30px;"
         </div>
         <div class="item">
           <i class="el-icon-user-solid icon"></i>
-          <a class="post-title-link">退出</a>
+          <a class="post-title-link" @click="logout">退出</a>
         </div>
       </div>
     </el-drawer>
@@ -135,6 +136,29 @@ font-size: 30px;"
     },
 
     methods: {
+      logout() {
+        var vueThis = this;
+        axios({
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          method: 'post',
+          url:'/logout'
+        })
+          .then(function (response) {
+            vueThis.$message(response.data.msg)
+            setTimeout(function () {
+                /* window.location.href = response.data.url*/
+                sessionStorage.clear()
+                localStorage.clear()
+                vueThis.$router.push('/login')
+              }, 1000
+            )
+          })
+          .catch(function (error) {
+            console.log(vueThis.items + '-=================')
+          })
+      },
       toArticleDetail(id) {
         this.$router.push({
           path:"/detail",
@@ -183,6 +207,13 @@ font-size: 30px;"
   }
 </script>
 <style>
+  .el-drawer__header {
+    align-items: center;
+    color: #72767b;
+    display: flex;
+    margin-bottom: 32px;
+    padding: 0;
+  }
   .post-title-link:hover::after, .post-title-link:active::after {
     visibility: visible;
     -webkit-transform: scaleX(1);
@@ -213,10 +244,21 @@ font-size: 30px;"
     height:40px;
     line-height: 40px;
   }
+  .item:hover {
+    background: rgba(0, 0, 0, 0.05);
+    height:40px;
+    line-height: 40px;
+  }
+  .item:active {
+    background: rgba(0, 0, 0, 0.05);
+    height:40px;
+    line-height: 40px;
+  }
   .post-title-link:hover {
     text-decoration: none;
   }
   a:hover {
+    cursor: pointer;
     color: #303f9f;
     text-decoration: underline;
   }

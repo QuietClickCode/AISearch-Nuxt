@@ -2,7 +2,8 @@
   <div>
     <div>{{title}}</div>
     <div class="content">
-<textarea :value="content" style="width: 100%;height: 95vh"></textarea>
+<textarea :value="content" style="width: 100%;height: 95vh">
+</textarea>
     </div>
 
   </div>
