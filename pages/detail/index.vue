@@ -59,14 +59,12 @@ var id = this.$route.query.id
           method: 'post',
           data: {
             id: id,
-            title:'',
-            content:null,
             platform: 'bky_article'
           }
         })
-          .then(response => {
-            this.content = response.data[0].content;
-            this.title = response.data[0].title;
+          .then(res => {
+            this.content = res.data[0].content;
+            this.title = res.data[0].title;
             // console.log(this.content)
           })
           .catch(function (error) {

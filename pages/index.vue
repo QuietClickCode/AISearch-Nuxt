@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <div v-loading="isLoaded">
+    <div>
       <div style="" :class="searchinput">
         <el-input style="width: 500px;margin-top:5px;" v-model="keyword" @keyup.enter.native="search"
                   :class="searchinput2">
@@ -38,8 +38,12 @@
   import axios from '~/plugins/axios'
   export default {
     name: "home",
+    created() {
+
+    },
     data() {
       return {
+        ip:'',
         page:1,
         isLoaded:true,
         isShow: false,
@@ -64,13 +68,8 @@
       }
     },
     mounted() {
-      this.haha();
     },
-
     methods: {
-      haha() {
-        this.isLoaded =false;
-      },
       search(page) {
         this.$router.push("/home");
         localStorage.setItem("word",this.keyword)
