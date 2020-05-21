@@ -6,6 +6,7 @@
     <remote-js src="http://pv.sohu.com/cityjson?ie=utf-8"></remote-js>
   </div>
 </template>
+
 <script>
   import axios from '~/plugins/axios'
 
