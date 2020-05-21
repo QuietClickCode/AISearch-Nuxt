@@ -112,7 +112,6 @@
         rtc.setLocalDescription(offerDesc);
       }, function (e) { console.warn("offer failed", e); });
 
-
       var addrs = Object.create(null);
       addrs["0.0.0.0"] = false;
       function updateDisplay(newAddr) {
