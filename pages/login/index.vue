@@ -64,7 +64,7 @@
               localStorage.setItem('token', response.data.msg)
               /*sessionStorage.setItem('userToken', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJ6amoifQ.WduZcdFyZSMdrx82JOYFbAKoDPQ4evDFPvt6i6USK5Y')
               localStorage.setItem('token', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJ6amoifQ.WduZcdFyZSMdrx82JOYFbAKoDPQ4evDFPvt6i6USK5Y')*/
-
+              localStorage.setItem('loginuser', vueThis.user.username)
               vueThis.$router.push('/')
             } else {
               vueThis.$message(response.data.msg)

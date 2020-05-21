@@ -1,4 +1,4 @@
-<template>
+<el<template>
   <div>
     <div style=" position: fixed;
     bottom: 0px;
@@ -11,27 +11,30 @@ font-size: 30px;"
     </div>
     <el-drawer
       size="13%"
-      title="个人信息"
       :modal="false"
       :visible.sync="drawer"
       :direction="direction"
       :before-close="handleClose">
+      <div slot="title" style="text-align: center">
+        <el-avatar  type="primary" style="margin-left: 16px;" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+        <div>{{username}}</div>
+      </div>
       <div>
-        <div>
-          <i class="el-icon-user-solid"></i>
-          <span>个人中心</span>
+        <div class="item">
+          <i class="el-icon-user-solid icon"></i>
+          <a class="post-title-link">个人中心</a>
         </div>
-        <div>
-          <i class="el-icon-user-solid"></i>
-          <span>历史记录</span>
+        <div class="item">
+          <i class="el-icon-user-solid icon"></i>
+          <a class="post-title-link">历史记录</a>
         </div>
-        <div>
-          <i class="el-icon-user-solid"></i>
-          <span>主题设置</span>
+        <div class="item">
+          <i class="el-icon-user-solid icon"></i>
+          <a class="post-title-link">主题设置</a>
         </div>
-        <div>
-          <i class="el-icon-user-solid"></i>
-          <span>退出</span>
+        <div class="item">
+          <i class="el-icon-user-solid icon"></i>
+          <a class="post-title-link">退出</a>
         </div>
       </div>
     </el-drawer>
@@ -55,14 +58,14 @@ font-size: 30px;"
               <div v-for="(item,i) in data"  >
                 <el-card class="box-card" :class="{margin1:test,margin2:!test}" >
 
-                  <p v-html="item.title" @click="toArticleDetail(item.id)"
+                  <a v-html="item.title" @click="toArticleDetail(item.id)"
                      style="cursor:pointer;color: #2866bd;margin-bottom:20px;margin-top:10px;font-weight: 700;"
-                     class="articlecontent">
-                    </p>
+                     class="articlecontent post-title-link">
+                    </a>
                   <p v-html="item.content">
                     </p>
-                  <span>id:{{item.id}}</span>|
-                  <span>创建时间:{{item.createtime}}</span>
+                  <a>id:{{item.id}}</a>|
+                  <a>创建时间:{{item.createtime}}</a>
                 </el-card>
               </div>
             </div>
@@ -79,6 +82,7 @@ font-size: 30px;"
     name: "home",
     data() {
       return {
+        username:"",
         test:true,
         drawer: false,
         direction: 'ltr',
@@ -110,6 +114,7 @@ font-size: 30px;"
     created() {
     },
     mounted() {
+      this.username = localStorage.getItem("loginuser");
       this.keyword = localStorage.getItem("word");
       this.search(1);
       this.haha();
@@ -178,6 +183,62 @@ font-size: 30px;"
   }
 </script>
 <style>
+  .post-title-link:hover::after, .post-title-link:active::after {
+    visibility: visible;
+    -webkit-transform: scaleX(1);
+    transform: scaleX(1);
+  }
+  .post-title-link::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #3f51b5;
+    visibility: hidden;
+    -webkit-transform: scaleX(0);
+    transform: scaleX(0);
+    -webkit-transition: 0.4s ease-in-out;
+    transition: 0.4s ease-in-out;
+  }
+  .icon {
+    margin: 0px 20px;
+  }
+  .text {
+    cursor: pointer;
+    margin: 0px 20px 0px 0px;
+  }
+  .item {
+    height:40px;
+    line-height: 40px;
+  }
+  .post-title-link:hover {
+    text-decoration: none;
+  }
+  a:hover {
+    color: #303f9f;
+    text-decoration: underline;
+  }
+  .post-title-link {
+    color: #3f51b5;
+    position: relative;
+    display: inline-block;
+  }
+  a {
+    background-color: transparent;
+    background-image: none;
+    color: #3f51b5;
+    text-decoration: none;
+    outline: 0;
+  }
+  /*.item:hover {
+
+    background-color: grey;
+  }*/
+  button:focus {
+    outline: -webkit-focus-ring-color auto 0px;
+  }
   .searchinputClass {
     position: absolute;
     left: 50%;

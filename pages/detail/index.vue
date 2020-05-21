@@ -1,6 +1,5 @@
 <template>
   <div>
-    <p @click="backtop">回到顶部<p>
     <div>{{title}}</div>
     <div class="content">
 <textarea :value="content" style="width: 100%;height: 95vh"></textarea>
@@ -51,21 +50,9 @@
 //      alert(this.$route.query.id)
 var id = this.$route.query.id
       this.search(id);
-      window.addEventListener("scroll",this.showbtn,true);
     },
 
     methods: {
-      backtop(){
-        var timer = setInterval(function(){
-          let osTop = document.documentElement.scrollTop || document.body.scrollTop;
-          let ispeed = Math.floor(-osTop / 5);
-          document.documentElement.scrollTop = document.body.scrollTop = osTop + ispeed;
-          this.isTop = true;
-          if(osTop === 0){
-            clearInterval(timer);
-          }
-        },30)
-      },
       search(id) {
         var vueThis = this
         axios({
