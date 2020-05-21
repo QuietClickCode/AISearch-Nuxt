@@ -49,6 +49,7 @@ font-size: 30px;"
         <div class="table-div section">
           <section class="centertest" >
             <div style="list-style:none;">
+
             <p style="font-size: 12px;transition: 0.3s;
     color: #999;" v-if="isShow" :class="{margin3:test,margin4:!test}">AISearch为您找到相关结果{{result.total}}个,耗时{{result.took}}ms</p>
               <div v-for="(item,i) in data"  >
@@ -69,6 +70,7 @@ font-size: 30px;"
         </div>
       </div>
     </div>
+    <el-backtop></el-backtop>
   </div>
 </template>
 <script>
