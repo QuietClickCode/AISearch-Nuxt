@@ -1,0 +1,24 @@
+<template>
+  <div>
+  </div>
+</template>
+<script>
+  import axios from '~/plugins/axios'
+  export default {
+    name: "login",
+    data() {
+      return {
+      }
+    },
+    created() {
+    },
+    mounted() {
+    },
+
+    methods: {
+    }
+
+  }
+</script>
+<style>
+</style>
